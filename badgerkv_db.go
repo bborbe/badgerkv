@@ -10,6 +10,7 @@ import (
 	"github.com/bborbe/errors"
 	libkv "github.com/bborbe/kv"
 	"github.com/dgraph-io/badger/v4"
+	"github.com/golang/glog"
 )
 
 type DB interface {
@@ -74,14 +75,24 @@ func (b *badgerdb) Close() error {
 	return b.db.Close()
 }
 
-func (b *badgerdb) Update(fn func(tx libkv.Tx) error) error {
+func (b *badgerdb) Update(ctx context.Context, fn func(tx libkv.Tx) error) error {
 	return b.db.Update(func(tx *badger.Txn) error {
-		return fn(NewTx(tx))
+		glog.V(4).Infof("db update started")
+		if err := fn(NewTx(tx)); err != nil {
+			return errors.Wrapf(ctx, err, "db update failed")
+		}
+		glog.V(4).Infof("db update completed")
+		return nil
 	})
 }
 
-func (b *badgerdb) View(fn func(tx libkv.Tx) error) error {
+func (b *badgerdb) View(ctx context.Context, fn func(tx libkv.Tx) error) error {
 	return b.db.View(func(tx *badger.Txn) error {
-		return fn(NewTx(tx))
+		glog.V(4).Infof("db view started")
+		if err := fn(NewTx(tx)); err != nil {
+			return errors.Wrapf(ctx, err, "db view failed")
+		}
+		glog.V(4).Infof("db view completed")
+		return nil
 	})
 }
