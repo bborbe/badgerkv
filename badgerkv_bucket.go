@@ -28,21 +28,11 @@ type bucket struct {
 }
 
 func (b *bucket) Iterator() libkv.Iterator {
-	return b.createIterator(false)
+	return NewIterator(b.badgerTx, b.bucketName)
 }
 
 func (b *bucket) IteratorReverse() libkv.Iterator {
-	return b.createIterator(true)
-}
-
-func (b *bucket) createIterator(reverse bool) libkv.Iterator {
-	opts := badger.DefaultIteratorOptions
-	opts.PrefetchSize = 10
-	opts.Reverse = reverse
-	return NewIterator(
-		b.badgerTx.NewIterator(opts),
-		b.bucketName,
-	)
+	return NewIteratorReverse(b.badgerTx, b.bucketName)
 }
 
 func (b *bucket) Get(ctx context.Context, key []byte) (libkv.Item, error) {

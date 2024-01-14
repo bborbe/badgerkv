@@ -16,27 +16,65 @@ import (
 
 func NewTx(badgerTx *badger.Txn) libkv.Tx {
 	return &tx{
-		badgerTx: badgerTx,
+		badgerTx:   badgerTx,
+		bucketName: libkv.NewBucketName("__bucket"),
 	}
 }
 
 type tx struct {
-	badgerTx *badger.Txn
+	badgerTx   *badger.Txn
+	bucketName libkv.BucketName
 }
 
 func (t *tx) Bucket(ctx context.Context, name libkv.BucketName) (libkv.Bucket, error) {
+	exists, err := t.existsBucket(ctx, name)
+	if err != nil {
+		return nil, errors.Wrapf(ctx, err, "check exists failed")
+	}
+	if exists == false {
+		return nil, errors.Wrapf(ctx, libkv.BucketNotFoundError, "bucket %s not found", name)
+	}
 	return NewBucket(t.badgerTx, name), nil
 }
 
 func (t *tx) CreateBucket(ctx context.Context, name libkv.BucketName) (libkv.Bucket, error) {
+	exists, err := t.existsBucket(ctx, name)
+	if err != nil {
+		return nil, errors.Wrapf(ctx, err, "check exists failed")
+	}
+	if exists {
+		return nil, errors.Wrapf(ctx, libkv.BucketAlreadyExistsError, "bucket %s already exists", name)
+	}
+	if err := t.createBucket(ctx, name); err != nil {
+		return nil, errors.Wrapf(ctx, err, "create bucket failed")
+	}
 	return NewBucket(t.badgerTx, name), nil
 }
 
 func (t *tx) CreateBucketIfNotExists(ctx context.Context, name libkv.BucketName) (libkv.Bucket, error) {
+	exists, err := t.existsBucket(ctx, name)
+	if err != nil {
+		return nil, errors.Wrapf(ctx, err, "check exists failed")
+	}
+	if exists == false {
+		if err := t.createBucket(ctx, name); err != nil {
+			return nil, errors.Wrapf(ctx, err, "create bucket failed")
+		}
+	}
 	return NewBucket(t.badgerTx, name), nil
 }
 
 func (t *tx) DeleteBucket(ctx context.Context, name libkv.BucketName) error {
+	exists, err := t.existsBucket(ctx, name)
+	if err != nil {
+		return errors.Wrapf(ctx, err, "check exists failed")
+	}
+	if exists == false {
+		return errors.Wrapf(ctx, libkv.BucketNotFoundError, "bucket %s not found", name)
+	}
+	if err := t.deleteBucket(ctx, name); err != nil {
+		return errors.Wrapf(ctx, err, "delete bucket failed")
+	}
 	opts := badger.DefaultIteratorOptions
 	opts.PrefetchSize = 10
 	it := t.badgerTx.NewIterator(opts)
@@ -52,4 +90,34 @@ func (t *tx) DeleteBucket(ctx context.Context, name libkv.BucketName) error {
 		}
 	}
 	return nil
+}
+
+func (t *tx) existsBucket(ctx context.Context, name libkv.BucketName) (bool, error) {
+	bucket := NewBucket(t.badgerTx, t.bucketName)
+	var exists bool
+	value, err := bucket.Get(ctx, name.Bytes())
+	if err != nil {
+		return false, errors.Wrapf(ctx, err, "get failed")
+	}
+	err = value.Value(func(val []byte) error {
+		exists = bytes.Compare(val, []byte("true")) == 0
+		return nil
+	})
+	if err != nil {
+		return false, errors.Wrapf(ctx, err, "value failed")
+	}
+	return exists, nil
+}
+
+func (t *tx) createBucket(ctx context.Context, name libkv.BucketName) error {
+	bucket := NewBucket(t.badgerTx, t.bucketName)
+	if err := bucket.Put(ctx, name.Bytes(), []byte("true")); err != nil {
+		return errors.Wrapf(ctx, err, "put failed")
+	}
+	return nil
+}
+
+func (t *tx) deleteBucket(ctx context.Context, name libkv.BucketName) error {
+	bucket := NewBucket(t.badgerTx, t.bucketName)
+	return bucket.Delete(ctx, name.Bytes())
 }

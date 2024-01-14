@@ -8,8 +8,11 @@ import (
 	libkv "github.com/bborbe/kv"
 )
 
+const bucketKeySeperator = byte('_')
+const bucketKeySeperatorPlusone = byte('_' + 1)
+
 func BucketToPrefix(bucket libkv.BucketName) []byte {
-	return append(bucket, '_')
+	return append(bucket, bucketKeySeperator)
 }
 
 func BucketAddKey(bucket libkv.BucketName, key []byte) []byte {

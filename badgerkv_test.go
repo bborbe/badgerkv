@@ -29,6 +29,7 @@ var _ = Describe("BadgerKV", func() {
 	AfterEach(func() {
 		_ = db.Close()
 	})
-	libkv.BasicTestSuite(ctx, provider)
-	libkv.IteratorTestSuite(ctx, provider)
+	libkv.BucketTestSuite(provider)
+	libkv.BasicTestSuite(provider)
+	libkv.IteratorTestSuite(provider)
 })
