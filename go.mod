@@ -4,7 +4,7 @@ go 1.21.5
 
 require (
 	github.com/bborbe/errors v1.2.0
-	github.com/bborbe/kv v1.1.0
+	github.com/bborbe/kv v1.1.1
 	github.com/dgraph-io/badger/v4 v4.2.0
 	github.com/golang/glog v1.2.0
 	github.com/onsi/ginkgo/v2 v2.14.0
@@ -29,7 +29,7 @@ require (
 	github.com/incu6us/goimports-reviser v0.1.6 // indirect
 	github.com/kisielk/errcheck v1.6.3 // indirect
 	github.com/klauspost/compress v1.17.4 // indirect
-	github.com/maxbrunsfeld/counterfeiter/v6 v6.7.0 // indirect
+	github.com/maxbrunsfeld/counterfeiter/v6 v6.8.1 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	go.opencensus.io v0.24.0 // indirect
 	golang.org/x/lint v0.0.0-20210508222113-6edffad5e616 // indirect
