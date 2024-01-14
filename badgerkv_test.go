@@ -18,15 +18,17 @@ var _ = Describe("BadgerKV", func() {
 	var ctx context.Context
 	var db libkv.DB
 	var err error
+	var provider libkv.ProviderFunc = func(ctx context.Context) (libkv.DB, error) {
+		return db, nil
+	}
 	BeforeEach(func() {
 		ctx = context.Background()
 		db, err = libbadgerkv.OpenMemory(ctx)
 		Expect(err).To(BeNil())
 	})
-	It("basic", func() {
-		libkv.BasicTestSuite(ctx, db)
+	AfterEach(func() {
+		_ = db.Close()
 	})
-	It("iterator", func() {
-		libkv.IteratorTestSuite(ctx, db)
-	})
+	libkv.BasicTestSuite(ctx, provider)
+	libkv.IteratorTestSuite(ctx, provider)
 })
