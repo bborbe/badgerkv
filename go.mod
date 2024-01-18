@@ -2,7 +2,7 @@ module github.com/bborbe/badgerkv
 
 go 1.21.5
 
-// replace github.com/bborbe/kv => ../kv
+replace github.com/bborbe/kv => ../kv
 
 require (
 	github.com/bborbe/errors v1.2.0

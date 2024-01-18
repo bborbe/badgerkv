@@ -13,6 +13,10 @@ import (
 	"github.com/golang/glog"
 )
 
+type contextKey string
+
+const stateCtxKey contextKey = "state"
+
 type DB interface {
 	libkv.DB
 	Badger() *badger.DB
@@ -75,24 +79,52 @@ func (b *badgerdb) Close() error {
 	return b.db.Close()
 }
 
-func (b *badgerdb) Update(ctx context.Context, fn func(tx libkv.Tx) error) error {
-	return b.db.Update(func(tx *badger.Txn) error {
+func (b *badgerdb) Update(ctx context.Context, fn func(ctx context.Context, tx libkv.Tx) error) error {
+	glog.V(4).Infof("db update started")
+	if IsTransactionOpen(ctx) {
+		return errors.Wrapf(ctx, libkv.TransactionAlreadyOpenError, "transaction already open")
+	}
+	err := b.db.Update(func(tx *badger.Txn) error {
 		glog.V(4).Infof("db update started")
-		if err := fn(NewTx(tx)); err != nil {
+		ctx = SetOpenState(ctx)
+		if err := fn(ctx, NewTx(tx)); err != nil {
 			return errors.Wrapf(ctx, err, "db update failed")
 		}
 		glog.V(4).Infof("db update completed")
 		return nil
 	})
+	if err != nil {
+		return errors.Wrapf(ctx, err, "db update failed")
+	}
+	glog.V(4).Infof("db update completed")
+	return nil
 }
 
-func (b *badgerdb) View(ctx context.Context, fn func(tx libkv.Tx) error) error {
-	return b.db.View(func(tx *badger.Txn) error {
+func (b *badgerdb) View(ctx context.Context, fn func(ctx context.Context, tx libkv.Tx) error) error {
+	glog.V(4).Infof("db view started")
+	if IsTransactionOpen(ctx) {
+		return errors.Wrapf(ctx, libkv.TransactionAlreadyOpenError, "transaction already open")
+	}
+	err := b.db.View(func(tx *badger.Txn) error {
 		glog.V(4).Infof("db view started")
-		if err := fn(NewTx(tx)); err != nil {
+		ctx = SetOpenState(ctx)
+		if err := fn(ctx, NewTx(tx)); err != nil {
 			return errors.Wrapf(ctx, err, "db view failed")
 		}
 		glog.V(4).Infof("db view completed")
 		return nil
 	})
+	if err != nil {
+		return errors.Wrapf(ctx, err, "db view failed")
+	}
+	glog.V(4).Infof("db view completed")
+	return nil
+}
+
+func IsTransactionOpen(ctx context.Context) bool {
+	return ctx.Value(stateCtxKey) != nil
+}
+
+func SetOpenState(ctx context.Context) context.Context {
+	return context.WithValue(ctx, stateCtxKey, "open")
 }
