@@ -9,10 +9,16 @@ import (
 	"github.com/dgraph-io/badger/v4"
 )
 
+type Item interface {
+	libkv.Item
+	BucketName() libkv.BucketName
+	Item() *badger.Item
+}
+
 func NewItem(
 	bucketName libkv.BucketName,
 	badgerItem *badger.Item,
-) libkv.Item {
+) Item {
 	return &item{
 		badgerItem: badgerItem,
 		bucketName: bucketName,
@@ -22,6 +28,14 @@ func NewItem(
 type item struct {
 	badgerItem *badger.Item
 	bucketName libkv.BucketName
+}
+
+func (i *item) BucketName() libkv.BucketName {
+	return i.bucketName
+}
+
+func (i *item) Item() *badger.Item {
+	return i.badgerItem
 }
 
 func (i *item) Exists() bool {

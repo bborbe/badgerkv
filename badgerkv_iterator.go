@@ -9,10 +9,16 @@ import (
 	"github.com/dgraph-io/badger/v4"
 )
 
+type Iterator interface {
+	libkv.Iterator
+	BucketName() libkv.BucketName
+	Iterator() *badger.Iterator
+}
+
 func NewIterator(
 	badgerTx *badger.Txn,
 	bucketName libkv.BucketName,
-) libkv.Iterator {
+) Iterator {
 	opts := badger.DefaultIteratorOptions
 	opts.PrefetchSize = 10
 	opts.Reverse = false
@@ -25,6 +31,14 @@ func NewIterator(
 type iterator struct {
 	badgerIterator *badger.Iterator
 	bucketName     libkv.BucketName
+}
+
+func (i iterator) BucketName() libkv.BucketName {
+	return i.bucketName
+}
+
+func (i iterator) Iterator() *badger.Iterator {
+	return i.badgerIterator
 }
 
 func (i iterator) Close() {

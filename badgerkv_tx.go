@@ -14,7 +14,12 @@ import (
 	"github.com/golang/glog"
 )
 
-func NewTx(badgerTx *badger.Txn) libkv.Tx {
+type Tx interface {
+	libkv.Tx
+	Tx() *badger.Txn
+}
+
+func NewTx(badgerTx *badger.Txn) Tx {
 	return &tx{
 		badgerTx:   badgerTx,
 		bucketName: libkv.NewBucketName("__bucket"),
@@ -24,6 +29,10 @@ func NewTx(badgerTx *badger.Txn) libkv.Tx {
 type tx struct {
 	badgerTx   *badger.Txn
 	bucketName libkv.BucketName
+}
+
+func (t *tx) Tx() *badger.Txn {
+	return t.badgerTx
 }
 
 func (t *tx) Bucket(ctx context.Context, name libkv.BucketName) (libkv.Bucket, error) {

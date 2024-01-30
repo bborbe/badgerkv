@@ -12,10 +12,16 @@ import (
 	"github.com/dgraph-io/badger/v4"
 )
 
+type Bucket interface {
+	libkv.Bucket
+	Tx() *badger.Txn
+	BucketName() libkv.BucketName
+}
+
 func NewBucket(
 	badgerTx *badger.Txn,
 	bucketName libkv.BucketName,
-) libkv.Bucket {
+) Bucket {
 	return &bucket{
 		bucketName: bucketName,
 		badgerTx:   badgerTx,
@@ -25,6 +31,14 @@ func NewBucket(
 type bucket struct {
 	badgerTx   *badger.Txn
 	bucketName libkv.BucketName
+}
+
+func (b *bucket) Tx() *badger.Txn {
+	return b.badgerTx
+}
+
+func (b *bucket) BucketName() libkv.BucketName {
+	return b.bucketName
 }
 
 func (b *bucket) Iterator() libkv.Iterator {

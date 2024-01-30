@@ -12,7 +12,7 @@ import (
 func NewIteratorReverse(
 	badgerTx *badger.Txn,
 	bucketName libkv.BucketName,
-) libkv.Iterator {
+) Iterator {
 	opts := badger.DefaultIteratorOptions
 	opts.PrefetchSize = 10
 	opts.Reverse = true
@@ -25,6 +25,14 @@ func NewIteratorReverse(
 type iteratorReverse struct {
 	badgerIterator *badger.Iterator
 	bucketName     libkv.BucketName
+}
+
+func (i iteratorReverse) BucketName() libkv.BucketName {
+	return i.bucketName
+}
+
+func (i iteratorReverse) Iterator() *badger.Iterator {
+	return i.badgerIterator
 }
 
 func (i iteratorReverse) Close() {

@@ -19,7 +19,7 @@ const stateCtxKey contextKey = "state"
 
 type DB interface {
 	libkv.DB
-	Badger() *badger.DB
+	DB() *badger.DB
 }
 
 type ChangeOptions func(opts *badger.Options)
@@ -71,7 +71,7 @@ func (b *badgerdb) Sync() error {
 	return b.db.Sync()
 }
 
-func (b *badgerdb) Badger() *badger.DB {
+func (b *badgerdb) DB() *badger.DB {
 	return b.db
 }
 
