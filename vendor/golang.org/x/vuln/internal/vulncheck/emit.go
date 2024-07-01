@@ -5,12 +5,13 @@
 package vulncheck
 
 import (
-	"sort"
+	"go/token"
+	"os"
+	"path/filepath"
+	"strings"
 
 	"golang.org/x/tools/go/packages"
-	"golang.org/x/vuln/internal"
 	"golang.org/x/vuln/internal/govulncheck"
-	"golang.org/x/vuln/internal/osv"
 )
 
 // emitOSVs emits all OSV vuln entries in modVulns to handler.
@@ -32,7 +33,7 @@ func emitModuleFindings(handler govulncheck.Handler, affVulns affectingVulns) er
 			if err := handler.Finding(&govulncheck.Finding{
 				OSV:          osv.ID,
 				FixedVersion: FixedVersion(modPath(vuln.Module), modVersion(vuln.Module), osv.Affected),
-				Trace:        []*govulncheck.Frame{frameFromModule(vuln.Module, osv.Affected)},
+				Trace:        []*govulncheck.Frame{frameFromModule(vuln.Module)},
 			}); err != nil {
 				return err
 			}
@@ -42,21 +43,8 @@ func emitModuleFindings(handler govulncheck.Handler, affVulns affectingVulns) er
 }
 
 // emitPackageFinding emits package-level findings fod vulnerabilities in vulns.
-//
-// It does not emit imported symbols. Only the package information is emitted.
 func emitPackageFindings(handler govulncheck.Handler, vulns []*Vuln) error {
-	emitted := make(map[Vuln]bool)
-	for _, vuln := range vulns {
-		v := Vuln{
-			Package: vuln.Package,
-			OSV:     vuln.OSV,
-		}
-		if emitted[v] {
-			// do not emit the same finding all over again
-			continue
-		}
-		emitted[v] = true
-
+	for _, v := range vulns {
 		if err := handler.Finding(&govulncheck.Finding{
 			OSV:          v.OSV.ID,
 			FixedVersion: FixedVersion(modPath(v.Package.Module), modVersion(v.Package.Module), v.OSV.Affected),
@@ -76,10 +64,6 @@ func emitCallFindings(handler govulncheck.Handler, callstacks map[*Vuln]CallStac
 		vulns = append(vulns, v)
 	}
 
-	sort.SliceStable(vulns, func(i, j int) bool {
-		return vulns[i].Symbol < vulns[j].Symbol
-	})
-
 	for _, vuln := range vulns {
 		stack := callstacks[vuln]
 		if stack == nil {
@@ -89,7 +73,7 @@ func emitCallFindings(handler govulncheck.Handler, callstacks map[*Vuln]CallStac
 		if err := handler.Finding(&govulncheck.Finding{
 			OSV:          vuln.OSV.ID,
 			FixedVersion: fixed,
-			Trace:        tracefromEntries(stack),
+			Trace:        traceFromEntries(stack),
 		}); err != nil {
 			return err
 		}
@@ -97,29 +81,92 @@ func emitCallFindings(handler govulncheck.Handler, callstacks map[*Vuln]CallStac
 	return nil
 }
 
-// tracefromEntries creates a sequence of
+// traceFromEntries creates a sequence of
 // frames from vcs. Position of a Frame is the
 // call position of the corresponding stack entry.
-func tracefromEntries(vcs CallStack) []*govulncheck.Frame {
+func traceFromEntries(vcs CallStack) []*govulncheck.Frame {
 	var frames []*govulncheck.Frame
 	for i := len(vcs) - 1; i >= 0; i-- {
 		e := vcs[i]
 		fr := frameFromPackage(e.Function.Package)
 		fr.Function = e.Function.Name
 		fr.Receiver = e.Function.Receiver()
-		if e.Call == nil || e.Call.Pos == nil {
-			fr.Position = nil
-		} else {
-			fr.Position = &govulncheck.Position{
-				Filename: e.Call.Pos.Filename,
-				Offset:   e.Call.Pos.Offset,
-				Line:     e.Call.Pos.Line,
-				Column:   e.Call.Pos.Column,
-			}
-		}
+		isSink := i == (len(vcs) - 1)
+		fr.Position = posFromStackEntry(e, isSink)
 		frames = append(frames, fr)
 	}
 	return frames
+}
+
+func posFromStackEntry(e StackEntry, sink bool) *govulncheck.Position {
+	var p *token.Position
+	var f *FuncNode
+	if sink && e.Function != nil && e.Function.Pos != nil {
+		// For sinks, i.e., vulns we take the position
+		// of the symbol.
+		p = e.Function.Pos
+		f = e.Function
+	} else if e.Call != nil && e.Call.Pos != nil {
+		// Otherwise, we take the position of
+		// the call statement.
+		p = e.Call.Pos
+		f = e.Call.Parent
+	}
+
+	if p == nil {
+		return nil
+	}
+	return &govulncheck.Position{
+		Filename: pathRelativeToMod(p.Filename, f),
+		Offset:   p.Offset,
+		Line:     p.Line,
+		Column:   p.Column,
+	}
+}
+
+// pathRelativeToMod computes a version of path
+// relative to the module of f. If it does not
+// have all the necessary information, returns
+// an empty string.
+//
+// The returned paths always use slash as separator
+// so they can work across different platforms.
+func pathRelativeToMod(path string, f *FuncNode) string {
+	if path == "" || f == nil || f.Package == nil { // sanity
+		return ""
+	}
+
+	mod := f.Package.Module
+	if mod.Replace != nil {
+		mod = mod.Replace // for replace directive
+	}
+
+	modDir := modDirWithVendor(mod.Dir, path, mod.Path)
+	p, err := filepath.Rel(modDir, path)
+	if err != nil {
+		return ""
+	}
+	// make sure paths are portable.
+	return filepath.ToSlash(p)
+}
+
+// modDirWithVendor returns modDir if modDir is not empty.
+// Otherwise, the module might be located in the vendor
+// directory. This function attempts to reconstruct the
+// vendored module directory from path and module. It
+// returns an empty string if reconstruction fails.
+func modDirWithVendor(modDir, path, module string) string {
+	if modDir != "" {
+		return modDir
+	}
+
+	sep := string(os.PathSeparator)
+	vendor := sep + "vendor" + sep
+	vendorIndex := strings.Index(path, vendor)
+	if vendorIndex == -1 {
+		return ""
+	}
+	return filepath.Join(path[:vendorIndex], "vendor", filepath.FromSlash(module))
 }
 
 func frameFromPackage(pkg *packages.Package) *govulncheck.Frame {
@@ -136,19 +183,10 @@ func frameFromPackage(pkg *packages.Package) *govulncheck.Frame {
 	return fr
 }
 
-func frameFromModule(mod *packages.Module, affected []osv.Affected) *govulncheck.Frame {
+func frameFromModule(mod *packages.Module) *govulncheck.Frame {
 	fr := &govulncheck.Frame{
 		Module:  mod.Path,
 		Version: mod.Version,
-	}
-
-	if mod.Path == internal.GoStdModulePath {
-		for _, a := range affected {
-			if a.Module.Path != mod.Path {
-				continue
-			}
-			fr.Package = a.EcosystemSpecific.Packages[0].Path
-		}
 	}
 
 	if mod.Replace != nil {
@@ -157,42 +195,4 @@ func frameFromModule(mod *packages.Module, affected []osv.Affected) *govulncheck
 	}
 
 	return fr
-}
-
-func emitBinaryResult(handler govulncheck.Handler, vr *Result, callstacks map[*Vuln]CallStack) error {
-	// first deal with all the affected vulnerabilities
-	emitted := map[string]bool{}
-	for _, vv := range vr.Vulns {
-		fixed := FixedVersion(modPath(vv.Package.Module), modVersion(vv.Package.Module), vv.OSV.Affected)
-		stack := callstacks[vv]
-		if stack == nil {
-			continue
-		}
-		emitted[vv.OSV.ID] = true
-		if err := handler.Finding(&govulncheck.Finding{
-			OSV:          vv.OSV.ID,
-			FixedVersion: fixed,
-			Trace:        tracefromEntries(stack),
-		}); err != nil {
-			return err
-		}
-	}
-	for _, vv := range vr.Vulns {
-		if emitted[vv.OSV.ID] {
-			continue
-		}
-		stacks := callstacks[vv]
-		if len(stacks) != 0 {
-			continue
-		}
-		emitted[vv.OSV.ID] = true
-		if err := handler.Finding(&govulncheck.Finding{
-			OSV:          vv.OSV.ID,
-			FixedVersion: FixedVersion(modPath(vv.Package.Module), modVersion(vv.Package.Module), vv.OSV.Affected),
-			Trace:        []*govulncheck.Frame{frameFromPackage(vv.Package)},
-		}); err != nil {
-			return err
-		}
-	}
-	return nil
 }

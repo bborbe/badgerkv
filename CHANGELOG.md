@@ -11,6 +11,7 @@ Please choose versions by [Semantic Versioning](http://semver.org/).
 ## v1.4.2
 
 - fix bucket name problem
+- go mod update
 
 ## v1.4.1
 

@@ -16,6 +16,12 @@ import (
 	"golang.org/x/vuln/internal/semver"
 )
 
+const (
+	fetchingVulnsMessage    = "Fetching vulnerabilities from the database..."
+	checkingSrcVulnsMessage = "Checking the code against the vulnerabilities..."
+	checkingBinVulnsMessage = "Checking the binary against the vulnerabilities..."
+)
+
 // Result contains information on detected vulnerabilities.
 // For call graph analysis, it provides information on reachability
 // of vulnerable symbols through entry points of the program.
@@ -162,6 +168,10 @@ func affectingVulnerabilities(vulns []*ModVulns, os, arch string) affectingVulns
 						filteredImports = append(filteredImports, p)
 					}
 				}
+				// If we pruned all existing Packages, then the affected is
+				// empty and we can filter it out. Note that Packages can
+				// be empty for vulnerabilities that have no package or
+				// symbol information available.
 				if len(a.EcosystemSpecific.Packages) != 0 && len(filteredImports) == 0 {
 					continue
 				}
@@ -177,6 +187,7 @@ func affectingVulnerabilities(vulns []*ModVulns, os, arch string) affectingVulns
 			newV.Affected = filteredAffected
 			filteredVulns = append(filteredVulns, &newV)
 		}
+
 		filtered = append(filtered, &ModVulns{
 			Module: module,
 			Vulns:  filteredVulns,
@@ -236,6 +247,12 @@ func (aff affectingVulns) ForPackage(importPath string) []*osv.Entry {
 Vuln:
 	for _, v := range vulns {
 		for _, a := range v.Affected {
+			if len(a.EcosystemSpecific.Packages) == 0 {
+				// no packages means all packages are vulnerable
+				packageVulns = append(packageVulns, v)
+				continue Vuln
+			}
+
 			for _, p := range a.EcosystemSpecific.Packages {
 				if p.Path == importPath {
 					packageVulns = append(packageVulns, v)
@@ -258,6 +275,12 @@ func (aff affectingVulns) ForSymbol(importPath, symbol string) []*osv.Entry {
 vulnLoop:
 	for _, v := range vulns {
 		for _, a := range v.Affected {
+			if len(a.EcosystemSpecific.Packages) == 0 {
+				// no packages means all symbols of all packages are vulnerable
+				symbolVulns = append(symbolVulns, v)
+				continue vulnLoop
+			}
+
 			for _, p := range a.EcosystemSpecific.Packages {
 				if p.Path != importPath {
 					continue
@@ -280,16 +303,4 @@ func contains(symbols []string, target string) bool {
 		}
 	}
 	return false
-}
-
-func IsStdPackage(pkg string) bool {
-	if pkg == "" {
-		return false
-	}
-	// std packages do not have a "." in their path. For instance, see
-	// Contains in pkgsite/+/refs/heads/master/internal/stdlbib/stdlib.go.
-	if i := strings.IndexByte(pkg, '/'); i != -1 {
-		pkg = pkg[:i]
-	}
-	return !strings.Contains(pkg, ".")
 }
