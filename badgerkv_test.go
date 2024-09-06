@@ -32,4 +32,5 @@ var _ = Describe("BadgerKV", func() {
 	libkv.BucketTestSuite(provider)
 	libkv.BasicTestSuite(provider)
 	libkv.IteratorTestSuite(provider)
+	libkv.RelationStoreTestSuite(provider)
 })
