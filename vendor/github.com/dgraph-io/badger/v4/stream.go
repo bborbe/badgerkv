@@ -1,17 +1,6 @@
 /*
- * Copyright 2018 Dgraph Labs, Inc. and Contributors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * SPDX-FileCopyrightText: © Hypermode Inc. <hello@hypermode.com>
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 package badger
@@ -25,6 +14,7 @@ import (
 	"time"
 
 	humanize "github.com/dustin/go-humanize"
+	"google.golang.org/protobuf/proto"
 
 	"github.com/dgraph-io/badger/v4/pb"
 	"github.com/dgraph-io/badger/v4/y"
@@ -486,7 +476,7 @@ func BufferToKVList(buf *z.Buffer) (*pb.KVList, error) {
 	var list pb.KVList
 	err := buf.SliceIterate(func(s []byte) error {
 		kv := new(pb.KV)
-		if err := kv.Unmarshal(s); err != nil {
+		if err := proto.Unmarshal(s, kv); err != nil {
 			return err
 		}
 		list.Kv = append(list.Kv, kv)
@@ -496,6 +486,7 @@ func BufferToKVList(buf *z.Buffer) (*pb.KVList, error) {
 }
 
 func KVToBuffer(kv *pb.KV, buf *z.Buffer) {
-	out := buf.SliceAllocate(kv.Size())
-	y.Check2(kv.MarshalToSizedBuffer(out))
+	in := buf.SliceAllocate(proto.Size(kv))[:0]
+	_, err := proto.MarshalOptions{}.MarshalAppend(in, kv)
+	y.AssertTrue(err == nil)
 }
