@@ -7,10 +7,11 @@ package badgerkv_test
 import (
 	"context"
 
-	libbadgerkv "github.com/bborbe/badgerkv"
 	libkv "github.com/bborbe/kv"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
+
+	libbadgerkv "github.com/bborbe/badgerkv"
 )
 
 var _ = Describe("BadgerKV", func() {

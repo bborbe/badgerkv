@@ -8,9 +8,10 @@ import (
 	"context"
 	"os"
 
-	libbadgerkv "github.com/bborbe/badgerkv"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
+
+	libbadgerkv "github.com/bborbe/badgerkv"
 )
 
 var _ = Describe("DB", func() {
