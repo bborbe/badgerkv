@@ -33,7 +33,7 @@ func MinMemoryUsageOptions(opts *badger.Options) {
 	opts.NumLevelZeroTablesStall = 8
 }
 
-func OpenPath(ctx context.Context, path string, fn ...ChangeOptions) (libkv.DB, error) {
+func OpenPath(ctx context.Context, path string, fn ...ChangeOptions) (DB, error) {
 	opts := badger.DefaultOptions(path)
 	opts.Logger = nil
 	for _, f := range fn {
@@ -46,7 +46,7 @@ func OpenPath(ctx context.Context, path string, fn ...ChangeOptions) (libkv.DB, 
 	return NewDB(db), nil
 }
 
-func OpenMemory(ctx context.Context, fn ...ChangeOptions) (libkv.DB, error) {
+func OpenMemory(ctx context.Context, fn ...ChangeOptions) (DB, error) {
 	opts := badger.DefaultOptions("").WithInMemory(true)
 	opts.Logger = nil
 	for _, f := range fn {

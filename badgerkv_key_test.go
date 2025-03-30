@@ -5,11 +5,10 @@
 package badgerkv_test
 
 import (
+	"github.com/bborbe/badgerkv"
 	libkv "github.com/bborbe/kv"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
-
-	"github.com/bborbe/badgerkv"
 )
 
 var _ = Describe("Key", func() {
