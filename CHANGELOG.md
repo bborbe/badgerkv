@@ -8,6 +8,11 @@ Please choose versions by [Semantic Versioning](http://semver.org/).
 * MINOR version when you add functionality in a backwards-compatible manner, and
 * PATCH version when you make backwards-compatible bug fixes.
 
+## v1.8.3
+
+- improve README with usage example and installation instructions
+- go mod update
+
 ## v1.8.2
 
 - add github workflow

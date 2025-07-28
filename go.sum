@@ -4,8 +4,8 @@ github.com/bborbe/collection v1.9.1 h1:g7iDWA1XOOeU/5hor/9KCESnRhx4YNWbJwEyvbxPX
 github.com/bborbe/collection v1.9.1/go.mod h1:NdvmtdYZSu6maE76CCrAjL3Qh8Z7Eo7YzsxvBoIBSHc=
 github.com/bborbe/errors v1.3.0 h1:LcCk5WjoH/sN+eBy45MspCYxsYAdrwla2hKePZdHLIM=
 github.com/bborbe/errors v1.3.0/go.mod h1:ZKSsf4/NJYhKkxSgtlLY+2jJa3hW2tbb/lQe3w9qZLM=
-github.com/bborbe/kv v1.14.1 h1:NZn98R9XZ3L/49z2tTBs4qe6ov40oIIVFFwNHp6mgTU=
-github.com/bborbe/kv v1.14.1/go.mod h1:enLXU96ndTm6L6JlpOvwK5S+/pcF7YPfQDxezWg+D7g=
+github.com/bborbe/kv v1.14.2 h1:5R1ZeequiGLY9SFD+BXbzkZuk/xz54EQMhzlYSNgS3o=
+github.com/bborbe/kv v1.14.2/go.mod h1:mjv9k1n41j0v5ez759PWvGESU/e5IZDqMioONEuJo5k=
 github.com/bborbe/run v1.7.5 h1:ONSLAFWrC7K2NNEvmoBvzw502mG1eeYAXA764GJk83Q=
 github.com/bborbe/run v1.7.5/go.mod h1:Rr4i2cLgmvUBdsLt+GAxBi7bIrItG7czwOx30uEX310=
 github.com/beorn7/perks v1.0.1 h1:VlbKKnNfV8bJzeqoa4cOKqO6bYr3WgKZxO8Z16+hsOM=

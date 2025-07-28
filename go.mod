@@ -15,7 +15,7 @@ exclude (
 require (
 	github.com/bborbe/collection v1.9.1
 	github.com/bborbe/errors v1.3.0
-	github.com/bborbe/kv v1.14.1
+	github.com/bborbe/kv v1.14.2
 	github.com/dgraph-io/badger/v4 v4.8.0
 	github.com/golang/glog v1.2.5
 	github.com/onsi/ginkgo/v2 v2.23.4
