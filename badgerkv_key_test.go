@@ -32,7 +32,10 @@ var _ = Describe("Key", func() {
 	})
 	Context("BucketRemoveKey", func() {
 		JustBeforeEach(func() {
-			bytes = badgerkv.BucketRemoveKey(libkv.NewBucketName("mybucket"), []byte("mybucket_1337"))
+			bytes = badgerkv.BucketRemoveKey(
+				libkv.NewBucketName("mybucket"),
+				[]byte("mybucket_1337"),
+			)
 		})
 		It("returns correct key", func() {
 			Expect(bytes).To(Equal([]byte("1337")))

@@ -139,7 +139,10 @@ func (b *badgerdb) Close() error {
 	return b.db.Close()
 }
 
-func (b *badgerdb) Update(ctx context.Context, fn func(ctx context.Context, tx libkv.Tx) error) error {
+func (b *badgerdb) Update(
+	ctx context.Context,
+	fn func(ctx context.Context, tx libkv.Tx) error,
+) error {
 	glog.V(4).Infof("db update started")
 	if IsTransactionOpen(ctx) {
 		return errors.Wrapf(ctx, libkv.TransactionAlreadyOpenError, "transaction already open")
@@ -160,7 +163,10 @@ func (b *badgerdb) Update(ctx context.Context, fn func(ctx context.Context, tx l
 	return nil
 }
 
-func (b *badgerdb) View(ctx context.Context, fn func(ctx context.Context, tx libkv.Tx) error) error {
+func (b *badgerdb) View(
+	ctx context.Context,
+	fn func(ctx context.Context, tx libkv.Tx) error,
+) error {
 	glog.V(4).Infof("db view started")
 	if IsTransactionOpen(ctx) {
 		return errors.Wrapf(ctx, libkv.TransactionAlreadyOpenError, "transaction already open")

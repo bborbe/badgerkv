@@ -11,6 +11,7 @@ import (
 )
 
 const bucketKeySeperator = byte('_')
+
 const bucketKeySeperatorPlusone = byte('_' + 1)
 
 func BucketToPrefix(bucket libkv.BucketName) []byte {

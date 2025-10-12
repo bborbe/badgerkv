@@ -84,7 +84,12 @@ func (t *tx) CreateBucket(ctx context.Context, name libkv.BucketName) (libkv.Buc
 		return nil, errors.Wrapf(ctx, err, "check exists failed")
 	}
 	if exists {
-		return nil, errors.Wrapf(ctx, libkv.BucketAlreadyExistsError, "bucket %s already exists", name)
+		return nil, errors.Wrapf(
+			ctx,
+			libkv.BucketAlreadyExistsError,
+			"bucket %s already exists",
+			name,
+		)
 	}
 	if err := t.createBucket(ctx, name); err != nil {
 		return nil, errors.Wrapf(ctx, err, "create bucket failed")
@@ -94,7 +99,10 @@ func (t *tx) CreateBucket(ctx context.Context, name libkv.BucketName) (libkv.Buc
 	return bucket, nil
 }
 
-func (t *tx) CreateBucketIfNotExists(ctx context.Context, name libkv.BucketName) (libkv.Bucket, error) {
+func (t *tx) CreateBucketIfNotExists(
+	ctx context.Context,
+	name libkv.BucketName,
+) (libkv.Bucket, error) {
 	t.mux.Lock()
 	defer t.mux.Unlock()
 
