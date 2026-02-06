@@ -8,6 +8,14 @@ Please choose versions by [Semantic Versioning](http://semver.org/).
 * MINOR version when you add functionality in a backwards-compatible manner, and
 * PATCH version when you make backwards-compatible bug fixes.
 
+## v1.9.2
+
+- Update Go to 1.25.7
+- Update github.com/dgraph-io/badger/v4 to v4.9.1
+- Update github.com/onsi/ginkgo/v2 to v2.28.1 and gomega to v1.39.1
+- Update github.com/google/osv-scanner/v2 to v2.3.2
+- Update numerous indirect dependencies
+
 ## v1.9.1
 
 - Update Go to 1.25.5
