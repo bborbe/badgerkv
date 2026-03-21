@@ -143,47 +143,39 @@ func (b *badgerdb) Update(
 	ctx context.Context,
 	fn func(ctx context.Context, tx libkv.Tx) error,
 ) error {
-	glog.V(4).Infof("db update started")
-	if IsTransactionOpen(ctx) {
-		return errors.Wrapf(ctx, libkv.TransactionAlreadyOpenError, "transaction already open")
-	}
-	err := b.db.Update(func(tx *badger.Txn) error {
-		glog.V(4).Infof("db update started")
-		ctx = SetOpenState(ctx)
-		if err := fn(ctx, NewTx(tx)); err != nil {
-			return errors.Wrapf(ctx, err, "db update failed")
-		}
-		glog.V(4).Infof("db update completed")
-		return nil
-	})
-	if err != nil {
-		return errors.Wrapf(ctx, err, "db update failed")
-	}
-	glog.V(4).Infof("db update completed")
-	return nil
+	return b.runTx(ctx, "update", b.db.Update, fn)
 }
 
 func (b *badgerdb) View(
 	ctx context.Context,
 	fn func(ctx context.Context, tx libkv.Tx) error,
 ) error {
-	glog.V(4).Infof("db view started")
+	return b.runTx(ctx, "view", b.db.View, fn)
+}
+
+func (b *badgerdb) runTx(
+	ctx context.Context,
+	op string,
+	badgerFn func(func(*badger.Txn) error) error,
+	fn func(ctx context.Context, tx libkv.Tx) error,
+) error {
+	glog.V(4).Infof("db %s started", op)
 	if IsTransactionOpen(ctx) {
 		return errors.Wrapf(ctx, libkv.TransactionAlreadyOpenError, "transaction already open")
 	}
-	err := b.db.View(func(tx *badger.Txn) error {
-		glog.V(4).Infof("db view started")
+	err := badgerFn(func(tx *badger.Txn) error {
+		glog.V(4).Infof("db %s started", op)
 		ctx = SetOpenState(ctx)
 		if err := fn(ctx, NewTx(tx)); err != nil {
-			return errors.Wrapf(ctx, err, "db view failed")
+			return errors.Wrapf(ctx, err, "db %s failed", op)
 		}
-		glog.V(4).Infof("db view completed")
+		glog.V(4).Infof("db %s completed", op)
 		return nil
 	})
 	if err != nil {
-		return errors.Wrapf(ctx, err, "db view failed")
+		return errors.Wrapf(ctx, err, "db %s failed", op)
 	}
-	glog.V(4).Infof("db view completed")
+	glog.V(4).Infof("db %s completed", op)
 	return nil
 }
 

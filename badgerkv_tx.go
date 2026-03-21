@@ -67,7 +67,7 @@ func (t *tx) Bucket(ctx context.Context, name libkv.BucketName) (libkv.Bucket, e
 	if err != nil {
 		return nil, errors.Wrapf(ctx, err, "check exists failed")
 	}
-	if exists == false {
+	if !exists {
 		return nil, errors.Wrapf(ctx, libkv.BucketNotFoundError, "bucket %s not found", name)
 	}
 	bucket = NewBucket(t.badgerTx, name)
@@ -115,7 +115,7 @@ func (t *tx) CreateBucketIfNotExists(
 	if err != nil {
 		return nil, errors.Wrapf(ctx, err, "check exists failed")
 	}
-	if exists == false {
+	if !exists {
 		if err := t.createBucket(ctx, name); err != nil {
 			return nil, errors.Wrapf(ctx, err, "create bucket failed")
 		}
@@ -133,7 +133,7 @@ func (t *tx) DeleteBucket(ctx context.Context, name libkv.BucketName) error {
 	if err != nil {
 		return errors.Wrapf(ctx, err, "check exists failed")
 	}
-	if exists == false {
+	if !exists {
 		return errors.Wrapf(ctx, libkv.BucketNotFoundError, "bucket %s not found", name)
 	}
 	if err := t.deleteBucket(ctx, name); err != nil {
@@ -145,7 +145,7 @@ func (t *tx) DeleteBucket(ctx context.Context, name libkv.BucketName) error {
 	defer it.Close()
 	for it.Seek(name.Bytes()); it.Valid(); it.Next() {
 		key := it.Item().Key()
-		if bytes.HasPrefix(key, name.Bytes()) == false {
+		if !bytes.HasPrefix(key, name.Bytes()) {
 			glog.V(3).Infof("delete all key of bucket %s completed", name)
 			break
 		}
@@ -166,7 +166,7 @@ func (t *tx) existsBucket(ctx context.Context, name libkv.BucketName) (bool, err
 		return false, errors.Wrapf(ctx, err, "get failed")
 	}
 	err = value.Value(func(val []byte) error {
-		exists = bytes.Compare(val, []byte("true")) == 0
+		exists = bytes.Equal(val, []byte("true"))
 		return nil
 	})
 	if err != nil {

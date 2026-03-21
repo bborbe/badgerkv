@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## v1.9.7
+
+- chore: enable golangci-lint in Makefile check target and update .golangci.yml to standard config with nestif, errname, unparam, bodyclose, forcetypeassert, asasalint, prealloc linters
+- refactor: extract runTx helper in badgerdb to eliminate dupl violation between Update and View
+- fix: simplify bool comparisons and use bytes.Equal in badgerkv_tx.go to resolve staticcheck violations
+
 Please choose versions by [Semantic Versioning](http://semver.org/).
 
 * MAJOR version when you make incompatible API changes,
