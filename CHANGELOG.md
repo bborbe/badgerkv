@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## v1.9.8
+
+- Update bborbe/collection to v1.20.7, bborbe/errors to v1.5.7, bborbe/kv to v1.19.2
+- Update shoenig/go-modtool to v0.6.0
+- Update bbolt to v1.4.3, go-yaml/v3 to v3.0.4
+- Remove replace/exclude directives from go.mod
+
 ## v1.9.7
 
 - chore: enable golangci-lint in Makefile check target and update .golangci.yml to standard config with nestif, errname, unparam, bodyclose, forcetypeassert, asasalint, prealloc linters
