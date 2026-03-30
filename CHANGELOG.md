@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## v1.9.9
+
+- bump bborbe/errors, bborbe/kv, bborbe/run dependencies
+- bump golangci-lint v2.11.4, osv-scanner v2.3.5
+- bump docker, containerd, moby toolchain deps
+- add runtime-spec replace directive for opencontainers/runtime-spec
+
 ## v1.9.8
 
 - Update bborbe/collection to v1.20.7, bborbe/errors to v1.5.7, bborbe/kv to v1.19.2
