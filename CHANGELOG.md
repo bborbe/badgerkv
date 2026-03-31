@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## v1.9.10
+
+- Update go-git/go-git to v5.17.1 (fix security vulnerabilities)
+
 ## v1.9.9
 
 - bump bborbe/errors, bborbe/kv, bborbe/run dependencies
