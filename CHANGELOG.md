@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## v1.9.11
+
+- bump bborbe/collection, errors, kv dependencies
+- bump go 1.26.1 → 1.26.2
+- bump indirect deps (otel, moby/buildkit, docker/cli, etc.)
+- add vuln ignores for bbolt/aws-sdk CVEs
+- update vulncheck to filter known false positives
+
 ## v1.9.10
 
 - Update go-git/go-git to v5.17.1 (fix security vulnerabilities)
