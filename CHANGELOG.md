@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## v1.9.13
+
+- bump go 1.26.2 → 1.26.3
+- bump bborbe/collection, errors, kv, run
+- bump getsentry/sentry-go v0.46.2
+- bump opentelemetry otel v1.43.0
+
 ## v1.9.12
 
 - chore: Migrate to tools.env + Makefile @version pattern; remove tools.go and obsolete replace block. go.mod reduced from 452 to 50 lines.
