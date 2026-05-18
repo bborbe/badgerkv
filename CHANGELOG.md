@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## v1.10.0
+
+- implement `Stats(ctx) (Stats, error)` to satisfy bborbe/kv v1.20.0 `DB` interface; uses `db.Size()` for total (LSM + value-log) and `ListBucketNames` + `kv.Count` per bucket — O(n), do not poll hot
+- bump bborbe/kv v1.19.7 → v1.20.0
+- bump ginkgo v2.28.3 → v2.29.0, gomega v1.40.0 → v1.41.0
+
 ## v1.9.13
 
 - bump go 1.26.2 → 1.26.3

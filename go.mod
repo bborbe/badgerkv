@@ -5,11 +5,11 @@ go 1.26.3
 require (
 	github.com/bborbe/collection v1.20.12
 	github.com/bborbe/errors v1.5.13
-	github.com/bborbe/kv v1.19.7
+	github.com/bborbe/kv v1.20.0
 	github.com/dgraph-io/badger/v4 v4.9.1
 	github.com/golang/glog v1.2.5
-	github.com/onsi/ginkgo/v2 v2.28.3
-	github.com/onsi/gomega v1.40.0
+	github.com/onsi/ginkgo/v2 v2.29.0
+	github.com/onsi/gomega v1.41.0
 )
 
 require (
