@@ -5,7 +5,7 @@ go 1.26.3
 require (
 	github.com/bborbe/collection v1.20.12
 	github.com/bborbe/errors v1.5.13
-	github.com/bborbe/kv v1.20.0
+	github.com/bborbe/kv v1.21.1
 	github.com/dgraph-io/badger/v4 v4.9.1
 	github.com/golang/glog v1.2.5
 	github.com/onsi/ginkgo/v2 v2.29.0

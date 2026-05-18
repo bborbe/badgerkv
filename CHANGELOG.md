@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## v1.11.0
+
+- **BREAKING**: `Stats(ctx)` now returns `*libkv.Stats` instead of `libkv.Stats` (matches bborbe/kv v1.21.0 interface)
+- Fast `Stats(ctx)` now lists bucket NAMES only (no per-prefix key scan)
+- Implement `StatsDetailed(ctx) (*libkv.Stats, error)` — adds per-bucket `KeyCount` via `kv.Count`; O(total keys), do not poll hot
+- Bump bborbe/kv v1.20.0 → v1.21.1
+
 ## v1.10.0
 
 - implement `Stats(ctx) (Stats, error)` to satisfy bborbe/kv v1.20.0 `DB` interface; uses `db.Size()` for total (LSM + value-log) and `ListBucketNames` + `kv.Count` per bucket — O(n), do not poll hot

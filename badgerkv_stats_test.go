@@ -29,34 +29,65 @@ var _ = Describe("BadgerKV Stats", func() {
 		_ = db.Close()
 	})
 
-	It("reports backend name", func() {
-		stats, err := db.Stats(ctx)
-		Expect(err).To(BeNil())
-		Expect(stats.Backend).To(Equal("badger"))
-	})
-
-	It("returns empty buckets list for fresh db", func() {
-		stats, err := db.Stats(ctx)
-		Expect(err).To(BeNil())
-		Expect(stats.Buckets).To(BeEmpty())
-	})
-
-	It("counts keys per bucket", func() {
-		bucketName := libkv.NewBucketName("test-bucket")
-		err := db.Update(ctx, func(ctx context.Context, tx libkv.Tx) error {
-			bucket, err := tx.CreateBucketIfNotExists(ctx, bucketName)
+	Context("Stats (fast)", func() {
+		It("reports backend name and Detailed=false", func() {
+			stats, err := db.Stats(ctx)
 			Expect(err).To(BeNil())
-			Expect(bucket.Put(ctx, []byte("k1"), []byte("v1"))).To(Succeed())
-			Expect(bucket.Put(ctx, []byte("k2"), []byte("v2"))).To(Succeed())
-			Expect(bucket.Put(ctx, []byte("k3"), []byte("v3"))).To(Succeed())
-			return nil
+			Expect(stats).NotTo(BeNil())
+			Expect(stats.Backend).To(Equal("badger"))
+			Expect(stats.Detailed).To(BeFalse())
 		})
-		Expect(err).To(BeNil())
 
-		stats, err := db.Stats(ctx)
-		Expect(err).To(BeNil())
-		Expect(stats.Buckets).To(HaveLen(1))
-		Expect(stats.Buckets[0].Name).To(Equal(bucketName))
-		Expect(stats.Buckets[0].KeyCount).To(Equal(int64(3)))
+		It("returns empty buckets list for fresh db", func() {
+			stats, err := db.Stats(ctx)
+			Expect(err).To(BeNil())
+			Expect(stats.Buckets).To(BeEmpty())
+		})
+
+		It("returns bucket names but leaves KeyCount at zero", func() {
+			bucketName := libkv.NewBucketName("test-bucket")
+			err := db.Update(ctx, func(ctx context.Context, tx libkv.Tx) error {
+				bucket, err := tx.CreateBucketIfNotExists(ctx, bucketName)
+				Expect(err).To(BeNil())
+				Expect(bucket.Put(ctx, []byte("k1"), []byte("v1"))).To(Succeed())
+				Expect(bucket.Put(ctx, []byte("k2"), []byte("v2"))).To(Succeed())
+				return nil
+			})
+			Expect(err).To(BeNil())
+
+			stats, err := db.Stats(ctx)
+			Expect(err).To(BeNil())
+			Expect(stats.Buckets).To(HaveLen(1))
+			Expect(stats.Buckets[0].Name).To(Equal(bucketName))
+			Expect(stats.Buckets[0].KeyCount).To(Equal(int64(0)))
+		})
+	})
+
+	Context("StatsDetailed", func() {
+		It("reports backend name and Detailed=true", func() {
+			stats, err := db.StatsDetailed(ctx)
+			Expect(err).To(BeNil())
+			Expect(stats.Backend).To(Equal("badger"))
+			Expect(stats.Detailed).To(BeTrue())
+		})
+
+		It("counts keys per bucket", func() {
+			bucketName := libkv.NewBucketName("test-bucket")
+			err := db.Update(ctx, func(ctx context.Context, tx libkv.Tx) error {
+				bucket, err := tx.CreateBucketIfNotExists(ctx, bucketName)
+				Expect(err).To(BeNil())
+				Expect(bucket.Put(ctx, []byte("k1"), []byte("v1"))).To(Succeed())
+				Expect(bucket.Put(ctx, []byte("k2"), []byte("v2"))).To(Succeed())
+				Expect(bucket.Put(ctx, []byte("k3"), []byte("v3"))).To(Succeed())
+				return nil
+			})
+			Expect(err).To(BeNil())
+
+			stats, err := db.StatsDetailed(ctx)
+			Expect(err).To(BeNil())
+			Expect(stats.Buckets).To(HaveLen(1))
+			Expect(stats.Buckets[0].Name).To(Equal(bucketName))
+			Expect(stats.Buckets[0].KeyCount).To(Equal(int64(3)))
+		})
 	})
 })
