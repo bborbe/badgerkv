@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## v1.11.1
+
+- bump go 1.26.3 → 1.26.4
+- bump golang.org/x/net v0.53.0 → v0.55.0, x/sys v0.43.0 → v0.45.0 (vuln fixes)
+- bump bborbe/collection v1.20.12 → v1.20.13, bborbe/run v1.9.24 → v1.9.27
+- drop standalone errcheck/gosec targets; move config into golangci.yml
+- add cloud.google.com/go v0.26.0 exclude
+
 ## v1.11.0
 
 - **BREAKING**: `Stats(ctx)` now returns `*libkv.Stats` instead of `libkv.Stats` (matches bborbe/kv v1.21.0 interface)

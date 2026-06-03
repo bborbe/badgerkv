@@ -1,9 +1,9 @@
 module github.com/bborbe/badgerkv
 
-go 1.26.3
+go 1.26.4
 
 require (
-	github.com/bborbe/collection v1.20.12
+	github.com/bborbe/collection v1.20.13
 	github.com/bborbe/errors v1.5.13
 	github.com/bborbe/kv v1.21.1
 	github.com/dgraph-io/badger/v4 v4.9.1
@@ -14,7 +14,7 @@ require (
 
 require (
 	github.com/Masterminds/semver/v3 v3.4.0 // indirect
-	github.com/bborbe/run v1.9.24 // indirect
+	github.com/bborbe/run v1.9.27 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/dgraph-io/ristretto/v2 v2.2.0 // indirect
@@ -47,4 +47,8 @@ require (
 	golang.org/x/text v0.37.0 // indirect
 	golang.org/x/tools v0.44.0 // indirect
 	google.golang.org/protobuf v1.36.11 // indirect
+)
+
+exclude (
+	cloud.google.com/go v0.26.0
 )
