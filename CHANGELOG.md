@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## v1.11.2
+
+- bump go to 1.26.4
+- bump bborbe/kv to v1.21.2
+- bump badger/v4 to v4.9.2
+- bump all remaining dependencies
+- add exclude directive for cloud.google.com/go v0.26.0
+
 ## v1.11.1
 
 - bump go 1.26.3 → 1.26.4
