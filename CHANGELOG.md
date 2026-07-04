@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## v1.11.3
+
+- Bump bborbe/collection to v1.20.15
+- Bump bborbe/errors to v1.5.15
+- Bump bborbe/kv to v1.21.4
+- Bump bborbe/run and getsentry/sentry-go
+
 ## v1.11.2
 
 - bump go to 1.26.4
