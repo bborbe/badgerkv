@@ -3,7 +3,7 @@ module github.com/bborbe/badgerkv
 go 1.26.4
 
 require (
-	github.com/bborbe/collection v1.20.15
+	github.com/bborbe/collection v1.20.16
 	github.com/bborbe/errors v1.5.15
 	github.com/bborbe/kv v1.21.4
 	github.com/dgraph-io/badger/v4 v4.9.2

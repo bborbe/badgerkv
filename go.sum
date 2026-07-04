@@ -1,7 +1,7 @@
 github.com/Masterminds/semver/v3 v3.4.0 h1:Zog+i5UMtVoCU8oKka5P7i9q9HgrJeGzI9SA1Xbatp0=
 github.com/Masterminds/semver/v3 v3.4.0/go.mod h1:4V+yj/TJE1HU9XfppCwVMZq3I84lprf4nC11bSS5beM=
-github.com/bborbe/collection v1.20.15 h1:1gtqvt8P79WJDdz68Ye3qK/ptYDYIY7Zj7vTOpMCf7g=
-github.com/bborbe/collection v1.20.15/go.mod h1:So2GHjAFVJzDHDtWHIGIbVqO1y/clgNq7khf6mnGpSI=
+github.com/bborbe/collection v1.20.16 h1:qJVJC+oao5abbKR1mg5vyHiE6uebQYdyyRLq1H/8xCQ=
+github.com/bborbe/collection v1.20.16/go.mod h1:48A74AaSwYHpMnZJjCQdDnZs44I4eLxduOJK6eEo52A=
 github.com/bborbe/errors v1.5.15 h1:GL/DpWlxkVcprneGM7xfTkhZNvzKXmdgNMtLDlAoK0Y=
 github.com/bborbe/errors v1.5.15/go.mod h1:bBTxWY1WGdpSN2MbB2uQQIoFCWjYz85UKVauzBadZRA=
 github.com/bborbe/kv v1.21.4 h1:YenBcGL3pq9mzUs9QtTe4p2C6Ko7HrdGsAmnuxGLtXg=

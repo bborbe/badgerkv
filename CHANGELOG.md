@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## v1.11.4
+
+- Bump github.com/bborbe/collection to v1.20.16
+
 ## v1.11.3
 
 - Bump bborbe/collection to v1.20.15
