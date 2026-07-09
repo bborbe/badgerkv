@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## v1.11.5
+
+- Bump github.com/dgraph-io/badger/v4 to v4.9.4
+- Bump github.com/bborbe/kv to v1.21.5
+- Bump github.com/bborbe/errors to v1.5.16
+- Bump github.com/bborbe/collection to v1.20.17
+- Bump go toolchain to 1.26.5
+
 ## v1.11.4
 
 - Bump github.com/bborbe/collection to v1.20.16
