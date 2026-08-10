@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+- update Go to 1.26.5 and update dependencies, fixing GO-2026-5841
+
 ## v1.11.6
 
 - Bump `golang.org/x/text` to v0.39.0 (CVE-2026-56852)
