@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## v1.11.7
 
 - chore: update Go to 1.26.5 and update dependencies, fixing GO-2026-5841
 
