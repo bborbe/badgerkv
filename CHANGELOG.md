@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+- chore: add the missing root `LICENSE` (BSD-3-Clause, matching the rest of the fleet). The repo is public and had no license file.
+
 ## v1.11.7
 
 - chore: update Go to 1.26.5 and update dependencies, fixing GO-2026-5841
