@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## v1.11.9
 
 - fix: add `ctx.Done()` guards to two unbounded I/O loops. `tx.DeleteBucket` iterates and deletes **every key in a bucket** one at a time, and `statsImpl` walks every bucket calling `tx.Bucket(ctx, name)` per entry. Both had `ctx` in scope and neither could be interrupted.
 
