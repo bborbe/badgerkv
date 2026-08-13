@@ -144,6 +144,12 @@ func (t *tx) DeleteBucket(ctx context.Context, name libkv.BucketName) error {
 	it := t.badgerTx.NewIterator(opts)
 	defer it.Close()
 	for it.Seek(name.Bytes()); it.Valid(); it.Next() {
+		select {
+		case <-ctx.Done():
+			return errors.Wrap(ctx, ctx.Err(), "context cancelled")
+		default:
+		}
+
 		key := it.Item().Key()
 		if !bytes.HasPrefix(key, name.Bytes()) {
 			glog.V(3).Infof("delete all key of bucket %s completed", name)

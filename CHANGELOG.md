@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+- fix: add `ctx.Done()` guards to two unbounded I/O loops. `tx.DeleteBucket` iterates and deletes **every key in a bucket** one at a time, and `statsImpl` walks every bucket calling `tx.Bucket(ctx, name)` per entry. Both had `ctx` in scope and neither could be interrupted.
+
 ## v1.11.8
 
 - chore: add the missing root `LICENSE` (BSD-3-Clause, matching the rest of the fleet). The repo is public and had no license file.

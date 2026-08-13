@@ -38,6 +38,12 @@ func (b *badgerdb) statsImpl(ctx context.Context, detailed bool) (*libkv.Stats, 
 			return errors.Wrapf(ctx, err, "list bucket names failed")
 		}
 		for _, name := range names {
+			select {
+			case <-ctx.Done():
+				return errors.Wrap(ctx, ctx.Err(), "context cancelled")
+			default:
+			}
+
 			bs := libkv.BucketStats{Name: name}
 			if detailed {
 				bucket, err := tx.Bucket(ctx, name)
