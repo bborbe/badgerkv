@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## v1.11.10
 
 - update Go to 1.26.6 and update dependencies, fixing GO-2026-5972, GO-2026-6090, GO-2026-6179, GO-2026-6180, CVE-2026-56864, CVE-2026-56865
 
