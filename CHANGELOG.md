@@ -2,8 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-## v1.11.9
+## Unreleased
 
+- update Go to 1.26.6 and update dependencies, fixing GO-2026-5972, GO-2026-6090, GO-2026-6179, GO-2026-6180, CVE-2026-56864, CVE-2026-56865
+
+## v1.11.9
 - fix: add `ctx.Done()` guards to two unbounded I/O loops. `tx.DeleteBucket` iterates and deletes **every key in a bucket** one at a time, and `statsImpl` walks every bucket calling `tx.Bucket(ctx, name)` per entry. Both had `ctx` in scope and neither could be interrupted.
 
 ## v1.11.8
