@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## v1.11.11
 
 - chore: update dependencies (bborbe/collection v1.20.21, bborbe/errors v1.5.18, bborbe/kv v1.21.10, bborbe/run v1.9.35)
 
