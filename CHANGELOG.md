@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## v1.11.12
 
 - chore: Make `format` run golines before `gofmt -w` and bump golangci-lint to v2.13.1 + errcheck to v1.20.0 for Go 1.27 tooling compatibility
 
