@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## v1.11.13
 
 - chore: update Go to 1.27.0 and github.com/bborbe/collection to v1.20.23, github.com/bborbe/errors to v1.5.20, github.com/bborbe/kv to v1.21.11
 
