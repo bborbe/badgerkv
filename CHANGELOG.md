@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+- chore: update Go to 1.27.0 and github.com/bborbe/collection to v1.20.23, github.com/bborbe/errors to v1.5.20, github.com/bborbe/kv to v1.21.11
+
 ## v1.11.12
 
 - chore: Make `format` run golines before `gofmt -w` and bump golangci-lint to v2.13.1 + errcheck to v1.20.0 for Go 1.27 tooling compatibility
