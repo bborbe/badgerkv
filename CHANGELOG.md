@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## v1.11.14
 
 - chore: update github.com/bborbe/collection to v1.20.24
 
