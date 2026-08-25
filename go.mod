@@ -3,7 +3,7 @@ module github.com/bborbe/badgerkv
 go 1.27.0
 
 require (
-	github.com/bborbe/collection v1.20.23
+	github.com/bborbe/collection v1.20.24
 	github.com/bborbe/errors v1.5.20
 	github.com/bborbe/kv v1.21.11
 	github.com/dgraph-io/badger/v4 v4.9.6
@@ -25,7 +25,7 @@ require (
 	github.com/go-task/slim-sprig/v3 v3.0.0 // indirect
 	github.com/google/flatbuffers v25.12.19+incompatible // indirect
 	github.com/google/go-cmp v0.7.0 // indirect
-	github.com/google/pprof v0.0.0-20260802141513-ef3492d7dac3 // indirect
+	github.com/google/pprof v0.0.0-20260825002013-8a176773c324 // indirect
 	github.com/gorilla/mux v1.8.1 // indirect
 	github.com/klauspost/compress v1.19.2 // indirect
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
