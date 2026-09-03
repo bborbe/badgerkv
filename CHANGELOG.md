@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## v1.11.15
 
 - chore: update github.com/bborbe/collection to v1.20.25, github.com/bborbe/errors to v1.6.0, github.com/bborbe/kv to v1.21.12, github.com/onsi/gomega to v1.43.0
 
