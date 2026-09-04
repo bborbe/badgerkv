@@ -3,9 +3,9 @@ module github.com/bborbe/badgerkv
 go 1.27.0
 
 require (
-	github.com/bborbe/collection v1.20.25
+	github.com/bborbe/collection v1.20.26
 	github.com/bborbe/errors v1.6.0
-	github.com/bborbe/kv v1.21.12
+	github.com/bborbe/kv v1.21.13
 	github.com/dgraph-io/badger/v4 v4.9.6
 	github.com/golang/glog v1.2.5
 	github.com/onsi/ginkgo/v2 v2.32.1

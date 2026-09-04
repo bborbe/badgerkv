@@ -1,11 +1,11 @@
 github.com/Masterminds/semver/v3 v3.5.0 h1:kQceYJfbupGfZOKZQg0kou0DgAKhzDg2NZPAwZ/2OOE=
 github.com/Masterminds/semver/v3 v3.5.0/go.mod h1:4V+yj/TJE1HU9XfppCwVMZq3I84lprf4nC11bSS5beM=
-github.com/bborbe/collection v1.20.25 h1:URU6OUFsNVisdTL5/MYMF7Ss/d1HSRfIGZ2UQuad+iE=
-github.com/bborbe/collection v1.20.25/go.mod h1:tB9tK2mJnqqfcJDtqP+8tIXTFW7LzjPCTmGOYE1llGI=
+github.com/bborbe/collection v1.20.26 h1:C0Spwgh2Y22UXhj7lr9K7wO4R8HA8luOkakFPMlGCxw=
+github.com/bborbe/collection v1.20.26/go.mod h1:FLjguM/PRD6g9tf8fP+wlyFwctMU+iQ8PX3+BBGk7UY=
 github.com/bborbe/errors v1.6.0 h1:gUE7PJpabcOBqgBxhJO5zPyTnbV651qxSoFiTPZMdBE=
 github.com/bborbe/errors v1.6.0/go.mod h1:NL1wqDWqHS08eGme6uL963guOSUlGpmyw+7C0RSfMPo=
-github.com/bborbe/kv v1.21.12 h1:ohqufzzY1HJv8pwoIdc8Jlli6V9zo0QPX7E3ID1BWQo=
-github.com/bborbe/kv v1.21.12/go.mod h1:e0jKIiPwTr1AMM3kcoBNAFQNzsLBXFy62QY1QYuHnEI=
+github.com/bborbe/kv v1.21.13 h1:SL6+ARTrHITH1uNugzdAYWWZKmK6VwXDVmW0VCuA99g=
+github.com/bborbe/kv v1.21.13/go.mod h1:EKckFkGqYlRCadDIYr7zJyBw7s48aYulC6UUW85pwHo=
 github.com/bborbe/run v1.10.2 h1:0qtUOl2/M9vSBXTKPlyu9Or1bYJk4IppZ7CMHNHlR9g=
 github.com/bborbe/run v1.10.2/go.mod h1:BpfgKGHvcACeiqjOCGBFHQPb0G7/pLPqH5+xcdkejVY=
 github.com/beorn7/perks v1.0.1 h1:VlbKKnNfV8bJzeqoa4cOKqO6bYr3WgKZxO8Z16+hsOM=
