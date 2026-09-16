@@ -2,8 +2,8 @@ github.com/Masterminds/semver/v3 v3.5.0 h1:kQceYJfbupGfZOKZQg0kou0DgAKhzDg2NZPAw
 github.com/Masterminds/semver/v3 v3.5.0/go.mod h1:4V+yj/TJE1HU9XfppCwVMZq3I84lprf4nC11bSS5beM=
 github.com/bborbe/collection v1.20.26 h1:C0Spwgh2Y22UXhj7lr9K7wO4R8HA8luOkakFPMlGCxw=
 github.com/bborbe/collection v1.20.26/go.mod h1:FLjguM/PRD6g9tf8fP+wlyFwctMU+iQ8PX3+BBGk7UY=
-github.com/bborbe/errors v1.6.0 h1:gUE7PJpabcOBqgBxhJO5zPyTnbV651qxSoFiTPZMdBE=
-github.com/bborbe/errors v1.6.0/go.mod h1:NL1wqDWqHS08eGme6uL963guOSUlGpmyw+7C0RSfMPo=
+github.com/bborbe/errors v1.6.1 h1:k2A7b5+gVFZKMam5NpvsBTN6o02DfP8xeamkvgav99Y=
+github.com/bborbe/errors v1.6.1/go.mod h1:DVq1+5PrwQ9ZnShmrSumPdJ9xNQe2wV197ECw2AUyh8=
 github.com/bborbe/kv v1.21.13 h1:SL6+ARTrHITH1uNugzdAYWWZKmK6VwXDVmW0VCuA99g=
 github.com/bborbe/kv v1.21.13/go.mod h1:EKckFkGqYlRCadDIYr7zJyBw7s48aYulC6UUW85pwHo=
 github.com/bborbe/run v1.10.2 h1:0qtUOl2/M9vSBXTKPlyu9Or1bYJk4IppZ7CMHNHlR9g=
@@ -43,8 +43,8 @@ github.com/google/flatbuffers v25.12.19+incompatible h1:haMV2JRRJCe1998HeW/p0X9U
 github.com/google/flatbuffers v25.12.19+incompatible/go.mod h1:1AeVuKshWv4vARoZatz6mlQ0JxURH0Kv5+zNeJKJCa8=
 github.com/google/go-cmp v0.7.0 h1:wk8382ETsv4JYUZwIsn6YpYiWiBsYLSJiTsyBybVuN8=
 github.com/google/go-cmp v0.7.0/go.mod h1:pXiqmnSA92OHEEa9HXL2W4E7lf9JzCmGVUdgjX3N/iU=
-github.com/google/pprof v0.0.0-20260902005441-ca85771921e4 h1:/6mPXfWmhv8eKck12I0YNIcIjwHtxP3YRIMKiEgTjWg=
-github.com/google/pprof v0.0.0-20260902005441-ca85771921e4/go.mod h1:jl5iWTm0/hd5PjEYEOuwAJ57L/CibdZfrqZ5XA5GrCk=
+github.com/google/pprof v0.0.0-20260906184651-6331bc6350fe h1:QAinXoAFJdGQYztXn3VpFey7KCwpedbZ/EkzbplQ0cY=
+github.com/google/pprof v0.0.0-20260906184651-6331bc6350fe/go.mod h1:jl5iWTm0/hd5PjEYEOuwAJ57L/CibdZfrqZ5XA5GrCk=
 github.com/gorilla/mux v1.8.1 h1:TuBL49tXwgrFYWhqrNgrUNEY92u81SPhu7sTdzQEiWY=
 github.com/gorilla/mux v1.8.1/go.mod h1:AKf9I4AEqPTmMytcMc0KkNouC66V3BtZ4qD5fmWSiMQ=
 github.com/joshdk/go-junit v1.0.0 h1:S86cUKIdwBHWwA6xCmFlf3RTLfVXYQfvanM5Uh+K6GE=
