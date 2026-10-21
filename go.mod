@@ -1,9 +1,9 @@
 module github.com/bborbe/badgerkv
 
-go 1.27.2
+go 1.27.3
 
 require (
-	github.com/bborbe/collection v1.21.2
+	github.com/bborbe/collection v1.21.3
 	github.com/bborbe/errors v1.6.3
 	github.com/bborbe/kv v1.21.18
 	github.com/dgraph-io/badger/v4 v4.9.6
