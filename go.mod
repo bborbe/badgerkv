@@ -5,7 +5,7 @@ go 1.27.3
 require (
 	github.com/bborbe/collection v1.21.4
 	github.com/bborbe/errors v1.6.5
-	github.com/bborbe/kv v1.21.19
+	github.com/bborbe/kv v1.21.20
 	github.com/dgraph-io/badger/v4 v4.9.6
 	github.com/golang/glog v1.2.5
 	github.com/onsi/ginkgo/v2 v2.33.1
@@ -27,12 +27,14 @@ require (
 	github.com/google/go-cmp v0.7.0 // indirect
 	github.com/google/pprof v0.0.0-20261026192309-dbd0ed30aa88 // indirect
 	github.com/gorilla/mux v1.8.1 // indirect
+	github.com/hashicorp/go-uuid v1.0.4 // indirect
 	github.com/klauspost/compress v1.20.3 // indirect
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
+	github.com/pandatix/go-abnf v0.5.1 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/prometheus/client_golang v1.25.0 // indirect
 	github.com/prometheus/client_model v0.6.3 // indirect
-	github.com/prometheus/common v0.72.1 // indirect
+	github.com/prometheus/common v0.73.0 // indirect
 	github.com/prometheus/procfs v0.23.0 // indirect
 	go.opentelemetry.io/auto/sdk v1.2.1 // indirect
 	go.opentelemetry.io/otel v1.47.0 // indirect
