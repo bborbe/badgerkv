@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## v1.11.31
 
 - chore: update github.com/bborbe/kv to v1.21.27
 
