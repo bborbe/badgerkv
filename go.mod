@@ -5,7 +5,7 @@ go 1.27.3
 require (
 	github.com/bborbe/collection v1.21.4
 	github.com/bborbe/errors v1.6.5
-	github.com/bborbe/kv v1.21.26
+	github.com/bborbe/kv v1.21.27
 	github.com/dgraph-io/badger/v4 v4.9.6
 	github.com/golang/glog v1.2.5
 	github.com/onsi/ginkgo/v2 v2.33.1
@@ -14,7 +14,7 @@ require (
 
 require (
 	github.com/Masterminds/semver/v3 v3.5.0 // indirect
-	github.com/bborbe/run v1.11.8 // indirect
+	github.com/bborbe/run v1.11.9 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/dgraph-io/ristretto/v2 v2.4.2 // indirect
@@ -33,7 +33,7 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/prometheus/client_golang v1.25.0 // indirect
 	github.com/prometheus/client_model v0.6.3 // indirect
-	github.com/prometheus/common v0.73.0 // indirect
+	github.com/prometheus/common v0.73.1 // indirect
 	github.com/prometheus/procfs v0.23.0 // indirect
 	go.opentelemetry.io/auto/sdk v1.2.1 // indirect
 	go.opentelemetry.io/otel v1.47.0 // indirect
