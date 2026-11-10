@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+- chore: update github.com/bborbe/collection to v1.21.6, github.com/bborbe/kv to v1.21.28, github.com/onsi/ginkgo/v2 to v2.34.0
+
 ## v1.11.32
 
 - chore: update github.com/bborbe/collection to v1.21.5, github.com/bborbe/errors to v1.6.6
