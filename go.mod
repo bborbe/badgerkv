@@ -1,11 +1,11 @@
 module github.com/bborbe/badgerkv
 
-go 1.27.3
+go 1.27.4
 
 require (
-	github.com/bborbe/collection v1.21.6
+	github.com/bborbe/collection v1.21.7
 	github.com/bborbe/errors v1.6.6
-	github.com/bborbe/kv v1.21.28
+	github.com/bborbe/kv v1.21.29
 	github.com/dgraph-io/badger/v4 v4.9.6
 	github.com/golang/glog v1.2.5
 	github.com/onsi/ginkgo/v2 v2.34.0
@@ -14,7 +14,7 @@ require (
 
 require (
 	github.com/Masterminds/semver/v3 v3.5.0 // indirect
-	github.com/bborbe/run v1.11.10 // indirect
+	github.com/bborbe/run v1.11.11 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/dgraph-io/ristretto/v2 v2.4.2 // indirect
@@ -25,7 +25,7 @@ require (
 	github.com/go-task/slim-sprig/v3 v3.0.0 // indirect
 	github.com/google/flatbuffers v25.12.19+incompatible // indirect
 	github.com/google/go-cmp v0.7.0 // indirect
-	github.com/google/pprof v0.0.0-20261110164715-8bb1ee682bd8 // indirect
+	github.com/google/pprof v0.0.0-20261111065629-49901cbc7227 // indirect
 	github.com/gorilla/mux v1.8.1 // indirect
 	github.com/klauspost/compress v1.20.4 // indirect
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
