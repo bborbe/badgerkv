@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+- chore: remove stale vulnerability ignore IDs that no longer apply (govulncheck, trivy)
+- fix: install Trivy from a pinned, checksum-verified release tarball instead of the apt-repo route that needed the removed `apt-key` helper
+
 ## v1.11.34
 
 - chore: update Go to 1.27.4 and github.com/bborbe/collection to v1.21.7, github.com/bborbe/kv to v1.21.29
